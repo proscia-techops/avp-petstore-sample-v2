@@ -1,4 +1,6 @@
-import { Amplify, API, Auth } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
+import { API } from 'aws-amplify/api';
+import { Auth } from 'aws-amplify/auth';
 
 import { withAuthenticator,
   Accordion,
