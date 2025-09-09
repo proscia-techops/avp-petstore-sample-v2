@@ -1,15 +1,15 @@
 import { Amplify, API, Auth } from 'aws-amplify';
 
 import { withAuthenticator,
-  Expander, 
+  Expander,
   ExpanderItem,
-  Button,  
+  Button,
   Heading,
   Link,
   Flex,
   View,
-  Text, 
-  Divider,Tabs, TabItem, Alert, TextField, Grid,TextAreaField,
+  Text,
+  Divider,Tabs, Alert, TextField, Grid,TextAreaField,
   useTheme} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { useState } from 'react';
@@ -53,26 +53,26 @@ function App({ signOut, user }) {
           <Flex width="7%"></Flex>
         </Flex>
       </View>
-      
+
       <View as="div" padding="10px">
 
         <Flex direction="row" justifyContent="space-around" alignItems="center">
           <Flex width="7%"></Flex>
-          <View padding="10px" as="div" level={1} textAlign="center" backgroundColor="var(--amplify-colors-white)" 
+          <View padding="10px" as="div" level={1} textAlign="center" backgroundColor="var(--amplify-colors-white)"
             width="86%" minHeight="300px" boxShadow="3px 3px 5px 6px var(--amplify-colors-neutral-60)" opacity="90">
-            
-            <Tabs defaultIndex={0} >
-              <TabItem title="Action simulation">
+
+            <Tabs defaultValue="action-simulation">
+              <Tab title="Action simulation" value="action-simulation">
                 <Grid templateColumns="1fr 1fr">
                   <View textAlign="left">
-                  
+
                     <TextField padding="10px" onChange={e => storeId = e.target.value} placeholder="PetStore Id eg. petstore-london" label="Enter PetStore Identifier" /><br/>
-                        
+
                     <Expander type="multiple" defaultValue={['line-1','line-2','line-3','line-4']}>
-  
+
                       <Divider orientation="horizontal" />
-                      
-                       
+
+
                       { roles.includes('Customer') ? (
                       <div>
                         <ExpanderItem title="Customer role type actions" value="line-1">
@@ -83,8 +83,8 @@ function App({ signOut, user }) {
                         </ExpanderItem>
                       </div>
                       ): null}
-                      
-                     
+
+
                       {roles.includes('Pet-Groomer-Role') ? (
                       <div>
                         <TextField onChange={e => storeId = e.target.value} placeholder="PetStore Id eg. petstore-london" label="Enter PetStore Identifier" /><br/>
@@ -97,7 +97,7 @@ function App({ signOut, user }) {
                       </ExpanderItem>
                       </div>
                       ) : null}
-                      
+
                       {roles.includes('StoreOwnerRole') ? (
                       <div>
                         <Divider orientation="horizontal" />
@@ -120,19 +120,19 @@ function App({ signOut, user }) {
                       ): null}
                     </Expander>
                   </View>
-                  
+
                   <View padding="10px" textAlign="left">
-                    <TextAreaField isReadOnly={true} rows="20" size="small" 
+                    <TextAreaField isReadOnly={true} rows="20" size="small"
                       label={
                         <Text fontWeight="bold" fontSize="medium">
                           Authorization query results:
                         </Text>
-                    } value={authResult} /> 
+                    } value={authResult} />
                   </View>
                 </Grid>
-              </TabItem>
+              </Tab>
             </Tabs>
-            
+
           </View>
           <Flex width="7%"></Flex>
         </Flex>
@@ -154,48 +154,48 @@ async function getData(actionPath, action) {
   };
 
   if(action == 'GET'){
-    API.get(apiName, path, myInit).then(result => {  
-      
+    API.get(apiName, path, myInit).then(result => {
+
       alertHeading = "Success!";
       alertVariation = "success";
       alertMessage = result.message;
       setIsAlertVisible(true);
-      
+
       authResult = JSON.stringify(result, null, 2);
-      
-      return result.body;  
-    }).catch(err => { 
-      
+
+      return result.body;
+    }).catch(err => {
+
       alertHeading = err.response.statusText;
       alertVariation = "error";
       alertMessage = err.response.data.message;
       setIsAlertVisible(true);
-      
+
       authResult = JSON.stringify(err.response.data, null, 2);
-     
+
     });
   }
 
   else if(action == 'POST'){
-    API.post(apiName, path, myInit).then(result => {  
-      
+    API.post(apiName, path, myInit).then(result => {
+
       alertHeading = "Success!";
       alertVariation = "success";
       alertMessage = result.message;
       setIsAlertVisible(true);
-      
+
       authResult = JSON.stringify(result, null, 2);
-      
-      return result.body;  
-    }).catch(err => {  
-      
+
+      return result.body;
+    }).catch(err => {
+
       alertHeading = err.response.statusText;
       alertVariation = "error";
       alertMessage = err.response.data.message;
       setIsAlertVisible(true);
-      
+
       authResult = JSON.stringify(err.response.data, null, 2);
-      
+
     });
   }
 }
@@ -207,6 +207,6 @@ async function getToken(type){
     return await (Auth.currentSession()).then(data => {return data.getAccessToken().getJwtToken()})
 }
 
-export default withAuthenticator(App, 
+export default withAuthenticator(App,
   { hideSignUp: true , signUpAttributes: ["name"]}
 );
