@@ -1,8 +1,8 @@
 import { Amplify, API, Auth } from 'aws-amplify';
 
 import { withAuthenticator,
-  Expander,
-  ExpanderItem,
+  Accordion,
+  AccordionItem,
   Button,
   Heading,
   Link,
@@ -68,19 +68,19 @@ function App({ signOut, user }) {
 
                     <TextField padding="10px" onChange={e => storeId = e.target.value} placeholder="PetStore Id eg. petstore-london" label="Enter PetStore Identifier" /><br/>
 
-                    <Expander type="multiple" defaultValue={['line-1','line-2','line-3','line-4']}>
+                    <Accordion defaultValue={['line-1','line-2','line-3','line-4']} allowMultiple>
 
                       <Divider orientation="horizontal" />
 
 
                       { roles.includes('Customer') ? (
                       <div>
-                        <ExpanderItem title="Customer role type actions" value="line-1">
+                        <AccordionItem title="Customer role type actions" value="line-1">
                           <Text textAlign="left" variation="info">Customers can search for pets, order pets and cancel orders. </Text><br/>
                           <Button onClick={() => getData('/pets', 'GET')}>Search Pets</Button>
                           <Button onClick={() => getData('/order/create', 'POST')}>Place Order</Button>
                           <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="View Order" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>View Order</Button>}/><br/>
-                        </ExpanderItem>
+                        </AccordionItem>
                       </div>
                       ): null}
 
@@ -89,36 +89,36 @@ function App({ signOut, user }) {
                       <div>
                         <TextField onChange={e => storeId = e.target.value} placeholder="PetStore Id eg. petstore-london" label="Enter PetStore Identifier" /><br/>
                         <Divider orientation="horizontal" />
-                        <ExpanderItem title="Pet Groomer role actions" value="line-2">
+                        <AccordionItem title="Pet Groomer role actions" value="line-2">
                           <Text textAlign="left" variation="info">Pet Groomers can add pets, edit pet details and  get order details  .</Text><br/>
                           <Button onClick={() => getData('/pet/create', 'POST')}>Add Pet</Button>
                           <TextField onChange={e => petId = e.target.value} placeholder="Pet ID, 123 for example" label="Edit pet details" outerStartComponent={<Button onClick={(e) => getData('/pet/update/'+petId, 'POST')}>Submit</Button>}/><br/>
                           <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="Get order details" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>Submit</Button>}/><br/>
-                      </ExpanderItem>
+                        </AccordionItem>
                       </div>
                       ) : null}
 
                       {roles.includes('StoreOwnerRole') ? (
                       <div>
                         <Divider orientation="horizontal" />
-                          <ExpanderItem title="Store Owner actions" value="line-3">
+                          <AccordionItem title="Store Owner actions" value="line-3">
                             <Text textAlign="left" variation="info">Store Manager can get all orders and inventory of pets.</Text><br/>
                             <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="View Order" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>View Order</Button>}/><br/>
                             <Button onClick={() => getData('/orders', 'GET')}>List All Orders</Button>
-                          </ExpanderItem>
+                          </AccordionItem>
                       </div>
                       ): null}
                       {roles.includes('FranchiseOwnerRole') ? (
                       <div>
                         <Divider orientation="horizontal" />
-                          <ExpanderItem title="Franchise Owner actions" value="line-4">
+                          <AccordionItem title="Franchise Owner actions" value="line-4">
                             <Text textAlign="left" variation="info">Franchise Owner can get all orders and inventory of pets for all its' stores.</Text><br/>
                             <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="View Order" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>View Order</Button>}/><br/>
                             <Button onClick={() => getData('/orders', 'GET')}>List All Orders</Button>
-                          </ExpanderItem>
+                          </AccordionItem>
                       </div>
                       ): null}
-                    </Expander>
+                    </Accordion>
                   </View>
 
                   <View padding="10px" textAlign="left">
