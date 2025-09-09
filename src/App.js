@@ -2,7 +2,6 @@ import { Amplify, API, Auth } from 'aws-amplify';
 
 import { withAuthenticator,
   Accordion,
-  AccordionItem,
   Button,
   Heading,
   Link,
@@ -75,12 +74,12 @@ function App({ signOut, user }) {
 
                       { roles.includes('Customer') ? (
                       <div>
-                        <AccordionItem title="Customer role type actions" value="line-1">
+                        <Accordion.Item title="Customer role type actions" value="line-1">
                           <Text textAlign="left" variation="info">Customers can search for pets, order pets and cancel orders. </Text><br/>
                           <Button onClick={() => getData('/pets', 'GET')}>Search Pets</Button>
                           <Button onClick={() => getData('/order/create', 'POST')}>Place Order</Button>
                           <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="View Order" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>View Order</Button>}/><br/>
-                        </AccordionItem>
+                        </Accordion.Item>
                       </div>
                       ): null}
 
@@ -89,33 +88,33 @@ function App({ signOut, user }) {
                       <div>
                         <TextField onChange={e => storeId = e.target.value} placeholder="PetStore Id eg. petstore-london" label="Enter PetStore Identifier" /><br/>
                         <Divider orientation="horizontal" />
-                        <AccordionItem title="Pet Groomer role actions" value="line-2">
+                        <Accordion.Item title="Pet Groomer role actions" value="line-2">
                           <Text textAlign="left" variation="info">Pet Groomers can add pets, edit pet details and  get order details  .</Text><br/>
                           <Button onClick={() => getData('/pet/create', 'POST')}>Add Pet</Button>
                           <TextField onChange={e => petId = e.target.value} placeholder="Pet ID, 123 for example" label="Edit pet details" outerStartComponent={<Button onClick={(e) => getData('/pet/update/'+petId, 'POST')}>Submit</Button>}/><br/>
                           <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="Get order details" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>Submit</Button>}/><br/>
-                        </AccordionItem>
+                        </Accordion.Item>
                       </div>
                       ) : null}
 
                       {roles.includes('StoreOwnerRole') ? (
                       <div>
                         <Divider orientation="horizontal" />
-                          <AccordionItem title="Store Owner actions" value="line-3">
+                          <Accordion.Item title="Store Owner actions" value="line-3">
                             <Text textAlign="left" variation="info">Store Manager can get all orders and inventory of pets.</Text><br/>
                             <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="View Order" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>View Order</Button>}/><br/>
                             <Button onClick={() => getData('/orders', 'GET')}>List All Orders</Button>
-                          </AccordionItem>
+                          </Accordion.Item>
                       </div>
                       ): null}
                       {roles.includes('FranchiseOwnerRole') ? (
                       <div>
                         <Divider orientation="horizontal" />
-                          <AccordionItem title="Franchise Owner actions" value="line-4">
+                          <Accordion.Item title="Franchise Owner actions" value="line-4">
                             <Text textAlign="left" variation="info">Franchise Owner can get all orders and inventory of pets for all its' stores.</Text><br/>
                             <TextField onChange={e => orderNumber = e.target.value}  placeholder="Order Number, 123 for example" label="View Order" outerStartComponent={<Button onClick={() => getData('/order/get/'+orderNumber, 'GET')}>View Order</Button>}/><br/>
                             <Button onClick={() => getData('/orders', 'GET')}>List All Orders</Button>
-                          </AccordionItem>
+                          </Accordion.Item>
                       </div>
                       ): null}
                     </Accordion>
